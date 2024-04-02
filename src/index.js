@@ -1,0 +1,17 @@
+const express = require('express');
+const colors = require('colors');
+const morgan = require('morgan');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const helmet = require('helmet');
+const user = require('./routes/user.route');
+require('./configs/db');
+const app = express();
+const port = process.env.PORT;
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(helmet());
+app.use(morgan('dev'));
+app.use(cors());
+app.use('/api/users', user);
+app.listen(port, () => console.log(colors.green(`Server listening on http://localhost:${port}`)));
